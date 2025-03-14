@@ -28,7 +28,7 @@ var character = { //The character object
     height: 200,
     attackWidth: 200,
     attackHeight: 200,
-    moveSpeed: 7,
+    moveSpeed: 16,
     positionX: canvas.width/2,
     positionY: canvas.height/2,
     moving: false,
@@ -57,6 +57,18 @@ var sprites = { //The sprite objects
     gameOver: new Image(),
     youWin: new Image()
 }
+
+let audio = null;
+document.body.addEventListener('click', () => {
+  audio = new Audio('sprites/Main-Theme-VII.mp3');
+});
+ 
+setInterval(() => {
+  if(audio) {
+    audio.play();
+  }
+}, 10000);
+
 
 for (spriteName in sprites) { //Get all the sprites source by its name
     sprites[spriteName].src = "sprites/" + spriteName + ".png";
@@ -131,19 +143,19 @@ function drawEnemies() {
                 var printImage;
                 if (character.attacking) { //This ifs check if the sword has hit the area of the enemy, and kills it if it's the case
                     if (character.direction == 3) {
-                        if (differenceX < 170 && differenceX > 0 && differenceY < 0 && differenceY > -140) {
+                        if (differenceX < 500 && differenceX > -500 && differenceY < 500 && differenceY > -500) {
                             image.alive = false;
                         }
                     } else if (character.direction == 1) {
-                        if (differenceX > -120 && differenceX < 0 && differenceY < 0 && differenceY > -140) {
+                        if (differenceX < 500 && differenceX > -500 && differenceY < 500 && differenceY > -500) {
                             image.alive = false;
                         }
                     } else if (character.direction == 2) {
-                        if (differenceX < 90 && differenceX > -90 && differenceY < 90 && differenceY > -60) {
+                        if (differenceX < 500 && differenceX > -500 && differenceY < 500 && differenceY > -500) {
                             image.alive = false;
                         }
                     } else if (character.direction == 0) {
-                        if (differenceX < 90 && differenceX > -90 && differenceY < -60 && differenceY > -200) {
+                        if (differenceX < 500 && differenceX > -500 && differenceY < 500 && differenceY > -500) {
                             image.alive = false;
                         }
                     }
@@ -268,7 +280,7 @@ function generateEnemies(map) {
     enemyPossibility = 1000 - distanceFromCenter * 2 //Set the enemy possibility
     for (x = 0; x < canvas.width / 192; x++) { //For each row
         for (y = 0; y < canvas.height / 108; y++) { //For each column
-            randomNumber = Math.floor(Math.random() * 1000); //Calculate a number between 0 and 999
+            randomNumber = Math.floor(Math.random() * 1080); //Calculate a number between 0 and 999
             if (randomNumber > enemyPossibility) { //If the random number is bigger than the enemy possibility overwrite tile with enemy
                 map[x][y] = {
                     positionX: x * 192, //Set enemy position
